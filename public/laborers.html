@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Labourers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css" >
+     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABXrzOdYntmVFt7vHZPMHEtAnvZLr7N-s&libraries=places"
+        ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+   <style type="">
+        #map {
+        height: 100%;
+      }
+       #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+              }
+        body{
+          background-image: url("https://static1.squarespace.com/static/539712a6e4b06a6c9b892bc1/t/53ad5474e4b06e52f1cec50b/1403868287605/");
+                   background-size: cover;
+        }
+         
+      
+   </style>
+       <script type="text/javascript">
+        
+    
+  function getLocation()
+  {
+     navigator.geolocation.getCurrentPosition(function(position){
+
+     var location = document.getElementById("latitude");
+     location.setAttribute('value', position.coords.latitude);
+     var longi = document.getElementById("longitude");
+     longi.setAttribute("value", position.coords.longitude);
+     });
+   }
+   function initMap(location) {
+        directionsService = new google.maps.DirectionsService();
+        directionsDisplay = new google.maps.DirectionsRenderer();
+        var loc = new google.maps.LatLng(location.coords.latitude,location.coords.longitude);
+        map = new google.maps.Map(document.getElementById('map'), {
+          mapTypeControl: false,
+          zoom: 8,
+          center: loc,
+          mapTypeId: 'terrain'
+        });
+        var marker = new google.maps.Marker({
+          position: loc,
+          map: map
+        });      
+      $.getJSON('labour.json', function(data) {
+       $.each(data, function(i, f) {
+       var loc = new google.maps.LatLng(f.latitude,f.longitude);
+       var  infoWindow = new google.maps.InfoWindow;
+       infoWindow.setPosition(loc);
+       var requirement = f.number+" "
+       infoWindow.setContent(requirement);
+       infoWindow.open(map);
+       var marker = new google.maps.Marker({
+          position: loc,
+          map: map
+        });   
+
+     });
+
+   });
+      }
+
+   navigator.geolocation.getCurrentPosition(initMap);
+   
+  </script>
+
+</head>
+<body onload="getLocation()">
+    <div class="row"></div>
+    <div id="map" class="ui container" style="width: 70%; align-self: center"></div>
+	<script type="text/javascript" src="/js/laborers.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- FORM RENDERING, LABOUR REUIREMENTS!! -->
+   <div class="ui fixed inverted menu">
+            <div class="ui container">
+                 <div class="header item"><a href="/"><i class="certificate icon"></i>KrishY</a></div>
+               <a href="/buy.html" class="item"  style="float: right">Buy</a>
+                <a href="/sell.html" class="item" style="float: right">Sell</a>
+                <a href="/labor" class="item" style="float: right">Find Laborers</a>
+                <a href="/cropSustainability.html" class="item" style="float: right">Am I growing the right crop?</a>
+                <a href="/chatTab.html" class="item"  style="float: right">Want to Chat?</a>
+                <a href="/awareness.html" class="item" style="float: right">Awareness</a>
+                
+              </div>
+            </div>
+           
+           
+                
+            
+              <div class="divy ui container main segment" style="width: 30%; align-self: center; background-color: black; color: white">
+               <div class ="ui huge header" style="color: white">Need Labourers?</div>
+                <form class= "ui fluid form"  action="/labor" method="POST">
+               <div class="field"  > <label style="color:white" >
+                  Email: <input type="text" name="email">
+                </label></div>
+                
+               <div class="field" > <label  style="color:white">
+                  Number: <input type="text" name="number">
+                </label></div>
+                
+               <div class="field" > <label  style="color:white">
+
+                 Latitude: <input id="latitude" type="text" name="latitude" value="">
+                </label></div>
+                
+               <div class="field" > <label  style="color:white">
+                 Longitude: <input id="longitude" type="text" name="longitude" value="">
+
+                </label></div>
+            
+
+                <button class="ui green button inverted " type="Submit">Submit</button>
+              </form> 
+
+              </div>
+
+             
+</body>
+</html>
